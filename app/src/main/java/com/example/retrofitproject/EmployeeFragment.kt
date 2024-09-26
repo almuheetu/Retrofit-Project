@@ -8,54 +8,50 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
+import com.example.retrofitproject.databinding.FragmentEmployeeListBinding
 import com.example.retrofitproject.placeholder.PlaceholderContent
+import com.example.retrofitproject.reposatories.EmployeeRepository
+import com.example.retrofitproject.viewModel.EmployeeViewModel
 
-/**
- * A fragment representing a list of Items.
- */
-class EmployeeFragment : Fragment() {
 
-    private var columnCount = 1
+class EmployeeFragment : Fragment(), EmployeeAdapter.ItemClickListener {
+    private lateinit var binding: FragmentEmployeeListBinding
+    private lateinit var employeeAdapter: EmployeeAdapter
+    private lateinit var viewModel: EmployeeViewModel
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        arguments?.let {
-            columnCount = it.getInt(ARG_COLUMN_COUNT)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_employee_list, container, false)
+    ): View {
+        binding = FragmentEmployeeListBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-        // Set the adapter
-        if (view is RecyclerView) {
-            with(view) {
-                layoutManager = when {
-                    columnCount <= 1 -> LinearLayoutManager(context)
-                    else -> GridLayoutManager(context, columnCount)
-                }
-                adapter = EmployeeAdapter(PlaceholderContent.ITEMS)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val recyclerView : RecyclerView = binding.employeeRecyclerView
+        recyclerView.layoutManager = LinearLayoutManager(context)
+
+        viewModel = EmployeeViewModel(EmployeeRepository())
+        viewModel.getEmployee()
+        viewModel.items.observe(viewLifecycleOwner) {
+            it?.let {
+                employeeAdapter = EmployeeAdapter(it)
+                recyclerView.adapter = employeeAdapter
+
             }
         }
-        return view
+
+
+
     }
 
-    companion object {
-
-        // TODO: Customize parameter argument names
-        const val ARG_COLUMN_COUNT = "column-count"
-
-        // TODO: Customize parameter initialization
-        @JvmStatic
-        fun newInstance(columnCount: Int) =
-            EmployeeFragment().apply {
-                arguments = Bundle().apply {
-                    putInt(ARG_COLUMN_COUNT, columnCount)
-                }
-            }
+    override fun onItemClick(id: Int) {
+        val action = EmployeeFragmentDirections.actionEmployeeFragmentToDetailsFragment(id)
+        findNavController().navigate(action)
     }
+
 }
