@@ -32,21 +32,17 @@ class EmployeeFragment : Fragment(), EmployeeAdapter.ItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val recyclerView : RecyclerView = binding.employeeRecyclerView
+        val recyclerView: RecyclerView = binding.employeeRecyclerView
         recyclerView.layoutManager = LinearLayoutManager(context)
-
+        EmployeeAdapter.listener = this
         viewModel = EmployeeViewModel(EmployeeRepository())
         viewModel.getEmployee()
         viewModel.items.observe(viewLifecycleOwner) {
             it?.let {
                 employeeAdapter = EmployeeAdapter(it)
                 recyclerView.adapter = employeeAdapter
-
             }
         }
-
-
-
     }
 
     override fun onItemClick(id: Int) {

@@ -17,12 +17,6 @@ class DetailsFragment : Fragment() {
     private val args: DetailsFragmentArgs by navArgs()
 
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,6 +35,21 @@ class DetailsFragment : Fragment() {
         viewModel.getEmployeeDetails(id)
         viewModel.items.observe(viewLifecycleOwner) {
             it?.let {
+                binding.tvEmployeeName.text = it.name
+                binding.tvEmployeeEmail.text = it.email
+                binding.tvEmployeeUserName.text = it.username
+                binding.tvEmployeeStreet.text = it.address.street
+                binding.tvEmployeeSuite.text = it.address.suite
+                binding.tvEmployeeCity.text = it.address.city
+                binding.tvEmployeeZipcode.text = it.address.zipcode
+                binding.tvEmployeeLat.text = it.address.geo.lat
+                binding.tvEmployeeLng.text = it.address.geo.lng
+                binding.tvEmployeePhone.text = it.phone
+                binding.tvEmployeeWebsite.text = it.website
+                binding.tvEmployeeCompanyBs.text = it.company.bs
+                binding.tvEmployeeCatchPhrase.text = it.company.catchPhrase
+                binding.tvEmployeeCompanyName.text = it.company.name
+                binding.tvEmployeeId.text = it.id.toString()
 
             }
         }

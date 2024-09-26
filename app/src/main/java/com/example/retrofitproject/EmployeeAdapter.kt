@@ -14,7 +14,7 @@ class EmployeeAdapter(
 ) : RecyclerView.Adapter<EmployeeAdapter.ViewHolder>() {
 
     companion object{
-         val listener: ItemClickListener? = null
+         var listener: ItemClickListener? = null
     }
 
     class ViewHolder(var binding: AdapterEmployeeBinding) : RecyclerView.ViewHolder(binding.root)
