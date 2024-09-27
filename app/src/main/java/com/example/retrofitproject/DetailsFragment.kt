@@ -50,9 +50,7 @@ class DetailsFragment : Fragment() {
                 binding.tvEmployeeCatchPhrase.text = it.company.catchPhrase
                 binding.tvEmployeeCompanyName.text = it.company.name
                 binding.tvEmployeeId.text = it.id.toString()
-
             }
         }
     }
-
 }
