@@ -8,17 +8,23 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.retrofitproject.databinding.FragmentEmployeeListBinding
 import com.example.retrofitproject.placeholder.PlaceholderContent
 import com.example.retrofitproject.reposatories.EmployeeRepository
 import com.example.retrofitproject.viewModel.EmployeeViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class EmployeeFragment : Fragment(), EmployeeAdapter.ItemClickListener {
     private lateinit var binding: FragmentEmployeeListBinding
-    private lateinit var employeeAdapter: EmployeeAdapter
-    private lateinit var viewModel: EmployeeViewModel
+//    private lateinit var employeeAdapter: EmployeeAdapter
+    private val viewModel: EmployeeViewModel by viewModels()
+    @Inject
+     lateinit var employeeAdapter: EmployeeAdapter
+
 
 
     override fun onCreateView(
@@ -34,12 +40,13 @@ class EmployeeFragment : Fragment(), EmployeeAdapter.ItemClickListener {
 
         val recyclerView: RecyclerView = binding.employeeRecyclerView
         recyclerView.layoutManager = LinearLayoutManager(context)
+        employeeAdapter = EmployeeAdapter()
         EmployeeAdapter.listener = this
-        viewModel = EmployeeViewModel(EmployeeRepository())
         viewModel.getEmployee()
         viewModel.items.observe(viewLifecycleOwner) {
             it?.let {
-                employeeAdapter = EmployeeAdapter(it)
+                employeeAdapter.setEmployeeList(it)
+                employeeAdapter.notifyDataSetChanged()
                 recyclerView.adapter = employeeAdapter
             }
         }

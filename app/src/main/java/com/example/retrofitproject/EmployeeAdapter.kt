@@ -6,13 +6,13 @@ import android.view.ViewGroup
 
 import com.example.retrofitproject.databinding.AdapterEmployeeBinding
 import com.example.retrofitproject.model.EmployeeResponseItem
+import javax.inject.Inject
+import javax.inject.Singleton
 
-
-class EmployeeAdapter(
-    private val employeeList : ArrayList<EmployeeResponseItem>
+class EmployeeAdapter @Inject constructor(
 
 ) : RecyclerView.Adapter<EmployeeAdapter.ViewHolder>() {
-
+     private lateinit var employeeList : ArrayList<EmployeeResponseItem>
     companion object{
          var listener: ItemClickListener? = null
     }
@@ -38,6 +38,9 @@ class EmployeeAdapter(
 
     interface ItemClickListener {
         fun onItemClick(id: Int)
+    }
+    fun setEmployeeList(list: ArrayList<EmployeeResponseItem>) {
+        this.employeeList = list
     }
 
 }
