@@ -16,7 +16,7 @@ class EmployeeAdapter @Inject constructor(
     companion object{
          var listener: ItemClickListener? = null
     }
-
+ 
     class ViewHolder(var binding: AdapterEmployeeBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
