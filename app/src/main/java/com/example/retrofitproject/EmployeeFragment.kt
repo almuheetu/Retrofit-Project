@@ -2,7 +2,6 @@ package com.example.retrofitproject
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
@@ -11,8 +10,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.retrofitproject.databinding.FragmentEmployeeListBinding
-import com.example.retrofitproject.placeholder.PlaceholderContent
-import com.example.retrofitproject.reposatories.EmployeeRepository
 import com.example.retrofitproject.viewModel.EmployeeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -20,11 +17,10 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class EmployeeFragment : Fragment(), EmployeeAdapter.ItemClickListener {
     private lateinit var binding: FragmentEmployeeListBinding
-//    private lateinit var employeeAdapter: EmployeeAdapter
     private val viewModel: EmployeeViewModel by viewModels()
-    @Inject
-     lateinit var employeeAdapter: EmployeeAdapter
 
+    @Inject
+    lateinit var employeeAdapter: EmployeeAdapter
 
 
     override fun onCreateView(

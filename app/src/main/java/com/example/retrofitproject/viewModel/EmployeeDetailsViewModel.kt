@@ -7,10 +7,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.retrofitproject.model.EmployeeResponseItem
 import com.example.retrofitproject.reposatories.EmployeeDetailsRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.io.IOException
+import javax.inject.Inject
 
-class EmployeeDetailsViewModel(val employeeDetailsRepository: EmployeeDetailsRepository) : ViewModel() {
+@HiltViewModel
+class EmployeeDetailsViewModel @Inject constructor (val employeeDetailsRepository: EmployeeDetailsRepository) : ViewModel() {
     private val _items: MutableLiveData<EmployeeResponseItem?> by lazy {
         MutableLiveData<EmployeeResponseItem?>()
     }
